@@ -1,0 +1,68 @@
+<project name="growl4j" default="make" basedir=".">
+    <description>
+        Packs growl4j into jar file
+    </description>
+    <!-- set global properties for this build -->
+    <property name="src" location="src"/>
+    <property name="src.native" location="${src}/native"/>
+    <property name="build" location="build"/>
+    <property name="lib" location="lib"/>
+
+    <target name="init">
+        <!-- Create the time stamp -->
+        <tstamp/>
+        <!-- Create the build directories used by compile -->
+        <mkdir dir="${build}"/>
+        <mkdir dir="${lib}"/>
+    </target>
+
+    <target name="compile"
+        depends="init, compileNative"
+        description="compile the source " >
+        <!-- Compile the java code from ${src} into ${build} -->
+        <javac srcdir="${src}" destdir="${build}"/>
+    </target>
+
+    <target name="make" depends="compile"
+        description="generate the distribution" >
+        <!-- Put everything in ${build} and ${src} into the growl4j.jar file -->
+        <jar jarfile="growl4j.jar">
+            <fileset dir="${build}"/>
+            <fileset dir="${src}" excludes="native/" />
+        </jar>
+    </target>
+
+    <target name="clean" description="clean up" depends="cleanNative">
+        <!-- Delete the files in ${build} directory tree -->
+        <delete failonerror="false" includeemptydirs="true">
+            <fileset dir="${build}" includes="**/*" defaultexcludes="false"/>
+        </delete>
+        <exec executable="rm">
+            <arg value="growl4j.jar" />
+        </exec>
+    </target>
+
+    <!-- Compiles the native dynamic library "libgrowl4j.dylib" -->
+    <target name="compileNative">
+        <exec executable="/usr/bin/make">
+            <arg value="-C" />
+            <arg value="${src.native}" />
+        </exec>
+        <exec executable="cp">
+            <arg value="${src.native}/libgrowl4j.dylib" />
+            <arg value="${lib}/libgrowl4j.dylib" />
+        </exec>
+    </target> 
+
+    <!-- Cleans the native dynamic library "libgrowl4j.dylib" -->
+    <target name="cleanNative">
+        <exec executable="/usr/bin/make">
+            <arg value="-C" />
+            <arg value="${src.native}" />
+            <arg value="clean" />
+        </exec>
+        <exec executable="rm">
+            <arg value="${lib}/libgrowl4j.dylib" />
+        </exec>
+    </target> 
+</project>
