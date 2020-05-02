@@ -30,7 +30,7 @@ jobs:
           path: target/growl4j-*
 
       - name: Release to Maven Central
-        #if: env.BRANCH == 'master'
+        if: env.BRANCH == 'master'
         env:
           SONATYPE_USER: ${{ secrets.SONATYPE_USER }}
           SONATYPE_PW: ${{ secrets.SONATYPE_PW }}
