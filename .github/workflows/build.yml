@@ -40,5 +40,5 @@ jobs:
           mvn \
             --no-transfer-progress \
             --batch-mode \
-            -Dgpg.passphrase=${{ secrets.GPG_PW }} \
+            -Dgpg.passphrase="${{ secrets.GPG_PW }}" \
             deploy
