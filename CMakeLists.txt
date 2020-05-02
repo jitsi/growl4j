@@ -30,3 +30,5 @@ target_link_libraries(${PROJECT_NAME}
                       "-framework AppKit"
                       ${GROWL_LIBRARY}
                       )
+install(TARGETS ${PROJECT_NAME}
+        LIBRARY DESTINATION .)

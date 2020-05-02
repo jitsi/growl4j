@@ -15,12 +15,7 @@ jobs:
       - name: Build native
         run: |
           cmake -B cmake-build
-          cmake --build cmake-build --config Release --verbose
-
-      - name: Copy native
-        run: |
-          mkdir src/main/resources
-          cp cmake-build/Release/libgrowl4j.dylib src/main/resources
+          cmake --build cmake-build --config Release --verbose --target install
 
       - name: Build
         run: mvn -B package
