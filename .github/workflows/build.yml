@@ -1,0 +1,37 @@
+name: Build
+
+on: [push, pull_request]
+
+jobs:
+  mac:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v2.1.0
+      - name: Set up JDK 1.8
+        uses: actions/setup-java@v1.3.0
+        with:
+          java-version: 1.8
+
+      - name: Build native
+        run: |
+          cmake -B cmake-build
+          cmake --build cmake-build --config Release --verbose
+
+      - name: Copy native
+        run: |
+          mkdir src/main/resources
+          cp cmake-build/Release/libgrowl4j.dylib src/main/resources
+
+      - name: Build
+        run: mvn -B package
+
+      - name: Release
+        if: env.BRANCH == 'master'
+        env:
+          GPG_PW: ${{ secrets.GPG_PW }}
+          SONATYPE_USER: ${{ secrets.SONATYPE_USER }}
+          SONATYPE_PW: ${{ secrets.SONATYPE_pw }}
+        run: |
+          echo ${{ secrets.GPG_KEY }} > key.asc
+          gpg --import --batch key.asc
+          mvn -B -Ppgp --setings settings.xml deploy

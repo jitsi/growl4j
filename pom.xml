@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+  xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>org.jitsi</groupId>
+  <artifactId>growl4j</artifactId>
+  <packaging>bundle</packaging>
+  <version>1.0.0-SNAPSHOT</version>
+  <name>growl4j</name>
+  <description>Java bindings for Growl</description>
+  <url>https://github.com/jitsi/growl4j</url>
+  <organization>
+    <name>jitsi.org</name>
+    <url>https://jitsi.org</url>
+  </organization>
+  <licenses>
+    <license>
+      <name>Apache-2.0</name>
+      <url>https://spdx.org/licenses/Apache-2.0.html</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+  <scm>
+    <connection>scm:git:https://github.com/jitsi/growl4j</connection>
+    <developerConnection>scm:git:https://github.com/jitsi/growl4j
+    </developerConnection>
+    <url>https://github.com/jitsi/growl4j</url>
+    <tag>HEAD</tag>
+  </scm>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.8.1</version>
+        <configuration>
+          <source>1.8</source>
+          <target>1.8</target>
+        </configuration>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-gpg-plugin</artifactId>
+        <version>1.6</version>
+        <executions>
+          <execution>
+            <id>sign-artifacts</id>
+            <phase>verify</phase>
+            <goals>
+              <goal>sign</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.felix</groupId>
+        <artifactId>maven-bundle-plugin</artifactId>
+        <version>4.2.1</version>
+        <extensions>true</extensions>
+        <configuration>
+          <instructions>
+            <Bundle-Name>Growl bindings for Java</Bundle-Name>
+            <Bundle-SymbolicName>org.growl4j</Bundle-SymbolicName>
+            <Automatic-Module-Name>org.growl4j</Automatic-Module-Name>
+            <Bundle-RequiredExecutionEnvironment>JavaSE-1.8
+            </Bundle-RequiredExecutionEnvironment>
+            <Bundle-License>
+              Apache-2.0;link="https://github.com/jitsi/growl4j/raw/master/LICENSE"
+            </Bundle-License>
+            <_removeheaders>Bnd-*, Tool, Require-Capability, Include-Resource
+            </_removeheaders>
+            <Include-Resource>
+              {maven-resources},
+              META-INF/LICENSE=LICENSE
+            </Include-Resource>
+            <Bundle-NativeCode>
+              libgrowl4j.dylib;osname=Mac OS X;processor=x86-64
+            </Bundle-NativeCode>
+          </instructions>
+        </configuration>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-source-plugin</artifactId>
+        <version>3.2.1</version>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-javadoc-plugin</artifactId>
+        <version>3.2.0</version>
+      </plugin>
+    </plugins>
+  </build>
+
+  <distributionManagement>
+    <snapshotRepository>
+      <id>ossrh</id>
+      <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+    </snapshotRepository>
+    <repository>
+      <id>ossrh</id>
+      <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+    </repository>
+  </distributionManagement>
+</project>

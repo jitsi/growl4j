@@ -1,23 +1,24 @@
-# growl4j
-the OpenSource Java Solution for using Growl
+# growl4j - Java bindings for [Growl](http://growl.info/)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/org.jitsi/growl4j/badge.svg)](https://search.maven.org/search?q=g:org.jitsi%20AND%20a:growl4j)
 
-1) To generate "growl4j.jar" and "libgrowl4j.dylib", just enter "ant make".
+## Usage
+Reference `org.jitsi:growl4j:<current-version>`. In an OSGi environment,
+the native binding is loaded automatically. Otherwise extract libgrowl4j.dylib
+and put it into your `java.library.path`.
 
-Any sowtfare using growl4j must sets the relative path between the native
-dynamic library "libgrowl4j.dylib" and the Growl framework location. This can be
-done by using the "install_name_tool" conforming to the following example:
+##Build instructions
+1. Prerequisites
+- CMake (3.16 or newer)
+- Xcode
+- Java SDK (8 or newer)
+- Maven
 
-// Check the current path between "libgrowl4j.dylib" and the Growl.ramework:
-$ otool -L libgrowl4j.dylib
-[...]
-    @executable_path/../Frameworks/Growl.framework/Versions/A/Growl
-[...]
+2. Native library
+```
+cmake --install --config Release
+```
 
-// Modifies the path used to find the Growl.framework ("\" is used to remove the
-// trailing characters):
-$ install_name_tool -change \
-    @executable_path/../Frameworks/Growl.framework/Versions/A/Growl \
-    /Users/toto/software/Growl-1.3.1-SDK/Framework/Growl.framework/Versions/A/Growl \
-    libgrowl4j.dylib
-
-2) To clean "growl4j.jar" and "libgrowl4j.dylib", just enter "ant clean".
+3. Java
+```
+mvn package
+```
