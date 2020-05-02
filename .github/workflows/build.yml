@@ -29,6 +29,9 @@ jobs:
           name: jar
           path: target/growl4j-*
 
+      - name: Extract Branch Name
+        run: echo "::set-env name=BRANCH::$(echo ${GITHUB_REF#refs/heads/})"
+
       - name: Release to Maven Central
         if: env.BRANCH == 'master'
         env:
