@@ -29,6 +29,13 @@
     <url>https://github.com/jitsi/growl4j</url>
     <tag>HEAD</tag>
   </scm>
+  <developers>
+    <developer>
+      <id>org.jitsi</id>
+      <name>Jitsi Team</name>
+      <email>dev@jitsi.org</email>
+    </developer>
+  </developers>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
