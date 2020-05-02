@@ -11,6 +11,9 @@ jobs:
         uses: actions/setup-java@v1.3.0
         with:
           java-version: 1.8
+          server-id: ossrh
+          server-username: SONATYPE_USER
+          server-password: SONATYPE_PW
 
       - name: Build native
         run: |
@@ -21,12 +24,21 @@ jobs:
         run: mvn -B package
 
       - name: Release
-        if: env.BRANCH == 'master'
+        #if: env.BRANCH == 'master'
         env:
-          GPG_PW: ${{ secrets.GPG_PW }}
           SONATYPE_USER: ${{ secrets.SONATYPE_USER }}
-          SONATYPE_PW: ${{ secrets.SONATYPE_pw }}
+          SONATYPE_PW: ${{ secrets.SONATYPE_PW }}
         run: |
           echo ${{ secrets.GPG_KEY }} > key.asc
           gpg --import --batch key.asc
-          mvn -B -Ppgp --setings settings.xml deploy
+          mvn \
+            --no-transfer-progress \
+            --batch-mode \
+            -Dgpg.passphrase=${{ secrets.GPG_PW }} \
+            deploy
+
+      - name: Attach jars
+        uses: actions/upload-artifact@v1
+        with:
+          name: jar
+          path: target/growl4j-*
