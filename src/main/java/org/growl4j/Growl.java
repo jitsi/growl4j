@@ -217,7 +217,8 @@ public final class Growl
      * clicks on notification.
      * Default value is <code>true</code>.
      * 
-     * @param focus
+     * @param focus brings app to front if set to {@code true} when clicking
+     *              the notification
      */
     public void takeCareOfSystemWideFocus(boolean focus)
     {

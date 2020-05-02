@@ -41,4 +41,5 @@ jobs:
             --no-transfer-progress \
             --batch-mode \
             -Dgpg.passphrase="${{ secrets.GPG_PW }}" \
+            -DperformRelease=true \
             deploy
