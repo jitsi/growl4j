@@ -6,9 +6,9 @@ jobs:
   mac:
     runs-on: macos-latest
     steps:
-      - uses: actions/checkout@v2.1.0
+      - uses: actions/checkout@01aecccf739ca6ff86c0539fbc67a7a5007bbc81  # v2.1.0
       - name: Set up JDK
-        uses: actions/setup-java@v1.3.0
+        uses: actions/setup-java@b74d5a6a962763ad3655696a314a4b34df4896c2  # v1.3.0
         with:
           java-version: 8
           server-id: ossrh
@@ -24,7 +24,7 @@ jobs:
         run: mvn -B package
 
       - name: Attach jars
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@82c141cc518b40d92cc801eee768e7aafc9c2fa2  # v2
         with:
           name: jar
           path: target/growl4j-*
